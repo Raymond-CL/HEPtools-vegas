@@ -1,0 +1,16 @@
+      PROGRAM XVEGAS
+         DOUBLE PRECISION XL,XU,ACC,F,AVGI,SD,CHI2A
+         COMMON/BVEG1/NCALL,ITMX,NPRN,NDEV,XL(10),XU(10),ACC
+         EXTERNAL F
+         XL(2)=-1
+         CALL VEGAS(2,F,AVGI,SD,CHI2A)
+         RETURN
+      END
+
+
+
+      FUNCTION F(X,WGT)
+         DOUBLE PRECISION X(2),WGT,F
+         F = DEXP(-100.*(X(1)**2 + (X(2)-1)**2))*100./3.141592654D0
+         RETURN
+      END
