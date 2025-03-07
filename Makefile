@@ -4,7 +4,13 @@ CC = gcc
 CXX = g++
 
 # rules for compiling the programs
-all: legacy nrf77 nrf90 nr2c nr2cpp nr3 gsl
+all: cuba gsl legacy nrf77 nrf90 nr2c nr2cpp nr3
+
+cuba: 
+	$(FC) -o $@.exe $@/cuba.f90 -lcuba
+
+gsl:
+	$(CXX) -Wno-write-strings -o $@.exe $@/gsl.cpp -lgsl
 
 legacy:
 	$(FC) -std=legacy -o $@.exe $@/vegas.f $@/xvegas.f
@@ -25,12 +31,10 @@ nr2cpp:
 nr3:
 	$(CXX) -o $@.exe $@/xvegas.cpp
 
-gsl:
-	$(CXX) -Wno-write-strings -o $@.exe $@/gsl.cpp -lgsl
 
 # rules for cleaning the directory
 clean:
-	rm -f *.exe *.mod
+	rm -f *.exe *.mod *.o
 
 # rules for phony targets
-.PHONY: all clean legacy nrf77 nrf90 nr2c nr2cpp nr3 gsl
+.PHONY: all clean cuba gsl legacy nrf77 nrf90 nr2c nr2cpp nr3
